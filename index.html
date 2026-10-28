@@ -1,0 +1,212 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<title>BreakLog · Class break and attendance tracker</title>
+<meta name="description" content="BreakLog is a free break and attendance tracker for hifz and madrasa teachers. Tap a student when they step out, tap again when they're back. Reports build themselves.">
+<meta name="theme-color" content="#0F7B7B">
+<link rel="canonical" href="https://rfydawood.github.io/breaklog/">
+<meta property="og:type" content="website">
+<meta property="og:site_name" content="BreakLog">
+<meta property="og:title" content="BreakLog: who's out, for how long, and when they're back">
+<meta property="og:description" content="A free class break and attendance tracker for hifz and madrasa teachers. Works on tablets, phones and computers, even offline.">
+<meta property="og:url" content="https://rfydawood.github.io/breaklog/">
+<meta property="og:image" content="https://rfydawood.github.io/breaklog/img/log.png">
+<meta property="og:image:width" content="2560">
+<meta property="og:image:height" content="1600">
+<meta property="og:image:alt" content="BreakLog on a tablet: a class of students as tiles, three of them out on a break">
+<meta name="twitter:card" content="summary_large_image">
+<link rel="icon" type="image/png" href="favicon.png">
+<link rel="apple-touch-icon" href="apple-touch-icon.png">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,600;12..96,800&family=Manrope:wght@500;600;700;800&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="styles.css">
+<style>
+/* Landing page only. The hero states the promise next to a real tablet screen;
+   the signature element is a row of the app's own student tiles stepping through one break. */
+.hero{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1.15fr);gap:44px;align-items:center;padding-block:30px 56px}
+.invited{margin-top:14px;font-size:14px;color:var(--mute);font-weight:600;max-width:46ch}
+.invited b{color:var(--ink)}
+.invited a{color:var(--leaf);font-weight:800}
+.tablet{background:#12293A;border-radius:22px;padding:12px;box-shadow:0 30px 60px -30px rgba(18,41,58,.55)}
+.tablet img{display:block;width:100%;height:auto;border-radius:12px}
+
+.strip{padding-block:56px;border-top:1px solid var(--line)}
+.steps{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:16px;margin-top:28px}
+.step{display:flex;flex-direction:column;gap:12px;min-width:0}
+.step .n{font-size:12.5px;font-weight:800;color:var(--mute);letter-spacing:.06em;text-transform:uppercase}
+.tile{border-radius:16px;padding:16px;min-height:132px;display:flex;flex-direction:column;justify-content:space-between;border:2px solid transparent;position:relative}
+.tile .nm{font-size:20px;font-weight:800;letter-spacing:-.01em}
+.tile .st{font-size:14px;font-weight:700;font-variant-numeric:tabular-nums}
+.tile .tag{position:absolute;top:12px;right:12px;font-size:11.5px;font-weight:800;padding:3px 8px;border-radius:7px}
+.t-in{background:#E7F1F1;border-color:#CFE2E2;color:#1F2E36}.t-in .st{color:#0C5C5C}
+.t-out{background:#FBF0D8;border-color:#D39A22;color:#1F2E36}.t-out .st{color:#6B4B0C}.t-out .tag{background:#fff7e6;color:#6B4B0C}
+.t-long{background:#F8E5E0;border-color:#C0503A;color:#1F2E36}.t-long .st{color:#C0503A}.t-long .tag{background:#fff0ec;color:#C0503A}
+.step p{margin:0;font-size:15px;color:var(--mute);font-weight:600}
+.step p b{color:var(--ink)}
+.live{animation:tick 1s steps(1) infinite}
+@media (prefers-reduced-motion:reduce){.live{animation:none}}
+@keyframes tick{50%{opacity:.75}}
+
+.split{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1.2fr);gap:44px;align-items:center;padding-block:56px;border-top:1px solid var(--line)}
+.split.rev{grid-template-columns:minmax(0,1.2fr) minmax(0,1fr)}
+.split.rev .txt{order:2}
+.shot{border-radius:16px;overflow:hidden;border:1px solid var(--line);background:var(--surface)}
+.shot img{display:block;width:100%;height:auto}
+#orgs{scroll-margin-top:12px}
+.soon-note{margin:14px 0 0;padding:10px 14px;border-radius:12px;background:var(--gold-soft);border:1px solid var(--gold);font-size:14px;font-weight:700;max-width:60ch}
+
+/* Placeholder until the organization view exists to screenshot */
+.ph{aspect-ratio:16/10;display:flex;flex-direction:column;gap:12px;padding:20px;background:
+  repeating-linear-gradient(135deg,transparent 0 14px,var(--bg) 14px 15px),var(--surface)}
+.ph .bar{height:30px;border-radius:9px;background:var(--band);opacity:.9;flex:none}
+.ph .row{display:flex;gap:8px;flex-wrap:wrap;flex:none}
+.ph .row span{height:22px;width:22%;min-width:54px;border-radius:999px;border:1px solid var(--line);background:var(--surface)}
+.ph .grid{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:10px;flex:1;min-height:0}
+.ph .grid span{border-radius:12px;border:1px solid var(--line);background:var(--surface)}
+.ph .grid span:nth-child(2){border:2px solid var(--gold);background:var(--gold-soft)}
+.ph .grid span:nth-child(4){border:2px solid var(--ember);background:var(--ember-soft)}
+.ph p{margin:0;text-align:center;font-weight:800;font-size:14px;color:var(--mute);flex:none}
+
+.fits{padding-block:56px;border-top:1px solid var(--line)}
+.cards{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:14px;margin-top:24px}
+.chips{display:flex;flex-wrap:wrap;gap:6px;margin-top:4px}
+.chips span{font-size:12.5px;font-weight:800;padding:3px 9px;border-radius:999px;background:var(--bg);border:1px solid var(--line)}
+.chips .d{display:inline-block;width:8px;height:8px;border-radius:50%;margin-right:5px;vertical-align:1px}
+
+.band{background:var(--band);color:var(--band-ink);margin-top:20px}
+.band .wrap{display:grid;grid-template-columns:minmax(0,1fr) auto;gap:24px;align-items:center;padding-block:44px}
+.band h2{color:var(--band-ink);margin:0 0 6px}
+.band p{margin:0;color:var(--band-mute);font-weight:600}
+.band .ctas .btn.ghost{background:transparent;color:var(--band-ink);border-color:rgba(255,255,255,.25)}
+
+.faq{padding-block:56px}
+.qs{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:14px 28px;margin-top:22px}
+.q h3{margin:0 0 4px;font-size:16.5px;font-weight:800}
+.q p{margin:0;color:var(--mute);font-weight:600;font-size:15px}
+.q a{color:var(--leaf);font-weight:700}
+
+@media (max-width:820px){
+  .hero,.split,.split.rev{grid-template-columns:1fr;gap:26px}
+  .split.rev .txt{order:0}
+  .steps,.cards,.qs{grid-template-columns:1fr}
+  .band .wrap{grid-template-columns:1fr}
+}
+</style>
+</head>
+<body>
+<div class="wrap">
+  <nav class="top" aria-label="Main">
+    <a class="logo" href="#top"><i aria-hidden="true"></i>BreakLog</a>
+    <div class="links"><a href="#how">How it works</a><a href="#orgs">For organizations</a><a href="#faq">Questions</a><a href="https://rfydawood.github.io/hifz-class-tracker/download.html">Get the app</a></div>
+    <a class="btn ghost" href="https://rfydawood.github.io/hifz-class-tracker/">Sign in</a>
+  </nav>
+
+  <main>
+  <section class="hero" id="top">
+    <div>
+      <div class="eyebrow">For madrasas, schools and classrooms</div>
+      <h1>Who’s out, <em>for how long</em>, and when they’re back.</h1>
+      <p class="lede">A tablet app for teachers. Tap a student when they step out, tap again when they’re back. Attendance and break reports build themselves.</p>
+      <div class="ctas">
+        <a class="btn dark" href="https://rfydawood.github.io/hifz-class-tracker/">I’m a teacher<small>Sign in with Google</small></a>
+        <a class="btn ghost" href="#orgs">I run an organization<small>Coming soon</small></a>
+      </div>
+      <p class="invited">Use it in your browser, or <a href="https://rfydawood.github.io/hifz-class-tracker/download.html">get the app</a> for Android and Windows. On iPhone or iPad, <b>add the website to your home screen.</b></p>
+    </div>
+    <div class="tablet"><img src="img/log.png" alt="BreakLog on a tablet: a class of twelve students as tiles, three of them out on a break and one past the wudhu limit" width="2560" height="1600"></div>
+  </section>
+  </main>
+</div>
+
+<section class="strip" id="how"><div class="wrap">
+  <div class="eyebrow">How it works</div>
+  <h2>One tap out, one tap back</h2>
+  <p class="sub">Every student is a tile. The colour tells you where they are from across the room.</p>
+  <div class="steps">
+    <div class="step"><span class="n">In class</span>
+      <div class="tile t-in"><span class="nm">Yusuf A.</span><span class="st">In class</span></div>
+      <p><b>Tap the student</b> and pick where they’re going: washroom, water, wudhu or other.</p></div>
+    <div class="step"><span class="n">Out</span>
+      <div class="tile t-out"><span class="tag">Out</span><span class="nm">Yusuf A.</span><span class="st">Water 2 min · <span class="live">1:14</span></span></div>
+      <p><b>The timer runs</b> against the limit you set: minutes per trip and trips per day.</p></div>
+    <div class="step"><span class="n">Past the limit</span>
+      <div class="tile t-long"><span class="tag">Past limit</span><span class="nm">Ibrahim K.</span><span class="st">Washroom 7 min · <span class="live">9:12</span></span></div>
+      <p><b>It turns red</b> when a break runs long, and the day’s summary remembers it.</p></div>
+  </div>
+</div></section>
+
+<div class="wrap">
+  <section class="split rev">
+    <div class="txt">
+      <div class="eyebrow">Reports</div>
+      <h2>See the week without writing anything down</h2>
+      <p class="sub">Time out of class, breaks over the limit, attendance and lateness, for the whole class or one student, by day, week or month.</p>
+      <ul class="ticks"><li>Export a report as a spreadsheet (CSV) any time</li><li>Each day keeps the times it actually had</li><li>Parents’ meetings with real numbers</li></ul>
+    </div>
+    <div class="shot"><img src="img/reports.png" alt="The Reports tab for one class this week: time out of class, breaks, breaks over the limit, attendance, and minutes out for each student" width="2560" height="1600" loading="lazy"></div>
+  </section>
+
+  <section class="split" id="orgs">
+    <div class="txt">
+      <div class="eyebrow">For organizations <span class="soon">Coming soon</span></div>
+      <h2>Every class, live, in one place</h2>
+      <p class="sub">Set up your organization, group classes into programs, and invite your teachers.</p>
+      <ul class="ticks">
+        <li>Programs like Full-time Hifz, Evening Maktab and Sunday School, each with its own times and limits</li>
+        <li>Invite teachers by email, then pick them from a list when you make a class</li>
+        <li>See which classes are running and who is out right now</li>
+        <li>Lock times and limits, or let a teacher set their own</li>
+      </ul>
+      <p class="soon-note">Organizations are being built now and aren’t in the app yet. Teachers can sign in and use BreakLog for their own classes today.</p>
+    </div>
+    <div class="shot ph" role="img" aria-label="Placeholder: the organization view will be shown here when it is ready">
+      <div class="bar"></div>
+      <div class="row"><span></span><span></span><span></span><span></span></div>
+      <div class="grid"><span></span><span></span><span></span><span></span><span></span><span></span></div>
+      <p>Organization view · screenshot coming soon</p>
+    </div>
+  </section>
+</div>
+
+<section class="fits"><div class="wrap">
+  <div class="eyebrow">Made to fit <span class="soon">Coming soon</span></div>
+  <h2>Start from what you run</h2>
+  <p class="sub">Pick one when you set up. Every break type can be renamed, hidden or added to later. These starting points arrive with organizations; today every class starts with washroom, water, wudhu and other.</p>
+  <div class="cards">
+    <div class="card"><h3>Madrasa or masjid</h3><p>Class times with snack and lunch, and wudhu as its own break.</p>
+      <div class="chips"><span><i class="d" style="background:#eb6834"></i>Washroom</span><span><i class="d" style="background:#2a78d6"></i>Water</span><span><i class="d" style="background:#1baf7a"></i>Wudhu</span><span><i class="d" style="background:#eda100"></i>Other</span></div></div>
+    <div class="card"><h3>School</h3><p>A bell schedule with periods, and attendance taken each period.</p>
+      <div class="chips"><span><i class="d" style="background:#eb6834"></i>Washroom</span><span><i class="d" style="background:#2a78d6"></i>Water</span><span>Nurse</span><span>Office</span><span>Locker</span></div></div>
+    <div class="card"><h3>Something else</h3><p>A plain list to rename however you like.</p>
+      <div class="chips"><span><i class="d" style="background:#eb6834"></i>Washroom</span><span><i class="d" style="background:#2a78d6"></i>Water</span><span><i class="d" style="background:#eda100"></i>Other</span></div></div>
+  </div>
+</div></section>
+
+<section class="band"><div class="wrap">
+  <div><h2>Free to use</h2><p>Your class is saved to your Google account, so it opens on any tablet, phone or computer you sign in on.</p></div>
+  <div class="ctas"><a class="btn leaf" href="https://rfydawood.github.io/hifz-class-tracker/">Sign in</a><a class="btn ghost" href="#orgs">Set up an organization<small>Coming soon</small></a></div>
+</div></section>
+
+<section class="faq" id="faq"><div class="wrap">
+  <div class="eyebrow">Questions</div>
+  <h2>What people ask first</h2>
+  <div class="qs">
+    <div class="q"><h3>Is it free?</h3><p>Yes. There are no ads and nothing to buy.</p></div>
+    <div class="q"><h3>Where is the data kept?</h3><p>In Google’s cloud (Firebase), under your own Google account. Only you can open it when you sign in. <a href="privacy.html">Privacy policy</a></p></div>
+    <div class="q"><h3>Do students need accounts?</h3><p>No. Students are just names on the teacher’s list. Only teachers sign in.</p></div>
+    <div class="q"><h3>Does it work without internet?</h3><p>Yes. It keeps logging and catches up when the connection comes back.</p></div>
+    <div class="q"><h3>Which devices?</h3><p>Any tablet, phone or computer with a web browser, plus an <a href="https://rfydawood.github.io/hifz-class-tracker/download.html">Android app and a Windows app</a>. On iPhone or iPad, add it to your home screen to use it like an app.</p></div>
+    <div class="q"><h3>Can I use it on more than one device?</h3><p>Yes. Sign in with the same Google account on each one and your classes stay in step within seconds.</p></div>
+  </div>
+</div></section>
+
+<div class="wrap"><footer class="foot">
+  <span>BreakLog · formerly Hifz Class Tracker</span>
+  <nav class="flinks" aria-label="Site"><a href="privacy.html">Privacy</a><a href="terms.html">Terms</a><a href="support.html">Support</a><a href="delete-account.html">Delete account</a></nav>
+  <span>Made by a hifz teacher, for teachers</span>
+</footer></div>
+</body>
+</html>

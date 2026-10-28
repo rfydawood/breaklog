@@ -1,0 +1,4 @@
+# The approved design mockup stays on this computer only; it is never published.
+_mockup/
+node_modules/
+test-results/
