@@ -12,6 +12,7 @@ It will be served by GitHub Pages at **https://rfydawood.github.io/breaklog/**. 
 | `privacy.html` | Privacy policy (effective 27 October 2026) |
 | `terms.html` | Terms of use (effective 27 October 2026) |
 | `support.html` | Help and FAQ |
+| `releases.html` | Release notes, newest first. Add a section for every app or Windows release |
 | `delete-account.html` | How account deletion works; links to the app's real deletion page |
 | `404.html` | Shown by GitHub Pages for any missing page |
 | `styles.css` | Shared colours, fonts and components for every page |
