@@ -55,6 +55,34 @@
 .split.rev .txt{order:2}
 .shot{border-radius:16px;overflow:hidden;border:1px solid var(--line);background:var(--surface)}
 .shot img{display:block;width:100%;height:auto}
+
+/* Reports chart: minutes out by student, the two above the class average highlighted */
+.chartcard{border-radius:16px;border:1px solid var(--line);background:var(--surface);padding:20px 18px 16px;display:flex;flex-direction:column;gap:12px;box-shadow:0 18px 40px -28px rgba(18,41,58,.45)}
+.chartcard .head{display:flex;justify-content:space-between;align-items:center;gap:10px;flex-wrap:wrap}
+.chartcard h3{margin:0;font-family:var(--display);font-weight:800;font-size:18px;letter-spacing:-.01em}
+.chartcard .pill{display:inline-flex;align-items:center;gap:7px;font-size:12.5px;font-weight:800;background:var(--leaf-soft);border-radius:999px;padding:4px 11px}
+.chartcard .pill i{width:7px;height:7px;border-radius:50%;background:var(--leaf)}
+.mchart{display:block;width:100%;height:auto}
+.chartcard{--c-washroom:#eb6834;--c-water:#2a78d6;--c-wudhu:#1baf7a}
+@media (prefers-color-scheme:dark){:root:not([data-theme="light"]) .chartcard{--c-washroom:#F07E52;--c-water:#5B8FEA;--c-wudhu:#3CBF8E}}
+:root[data-theme="dark"] .chartcard{--c-washroom:#F07E52;--c-water:#5B8FEA;--c-wudhu:#3CBF8E}
+.mchart text{font-family:var(--body);font-weight:600;fill:var(--mute)}
+.mchart .ax{font-size:11.5px;text-anchor:end}
+.mchart .g{stroke:var(--line);stroke-opacity:.6}.mchart .b{stroke:var(--line)}
+.mchart .washroom{fill:var(--c-washroom)}.mchart .water{fill:var(--c-water)}.mchart .wudhu{fill:var(--c-wudhu)}
+.mchart .gap{fill:var(--surface)}
+.mchart .fade{opacity:.32}
+.mchart .band{fill:var(--leaf-soft)}
+.mchart .nm{font-size:12.5px;text-anchor:middle}
+.mchart .hi .nm{font-weight:800;fill:var(--ink)}
+.mchart .val{font-size:13px;font-weight:800;text-anchor:middle;fill:var(--ink)}
+.mchart .avg{stroke:var(--ink);stroke-width:1.5;stroke-dasharray:5 4}
+.mchart .avgbg{fill:var(--surface)}
+.mchart .avgt{font-size:11.5px;font-weight:800;fill:var(--ink)}
+.chartcard .key{display:flex;flex-wrap:wrap;gap:6px 16px;margin:0;padding:0;list-style:none;font-size:13px;font-weight:700;color:var(--mute)}
+.chartcard .key li{display:flex;align-items:center;gap:6px}
+.chartcard .key .sw{width:11px;height:11px;border-radius:3px}
+.chartcard .key .dash{width:18px;border-top:2px dashed var(--ink)}
 #orgs{scroll-margin-top:12px}
 .soon-note{margin:14px 0 0;padding:10px 14px;border-radius:12px;background:var(--gold-soft);border:1px solid var(--gold);font-size:14px;font-weight:700;max-width:60ch}
 
@@ -142,11 +170,92 @@
   <section class="split rev">
     <div class="txt">
       <div class="eyebrow">Reports</div>
-      <h2>See the week without writing anything down</h2>
-      <p class="sub">Time out of class, breaks over the limit, attendance and lateness, for the whole class or one student, by day, week or month.</p>
-      <ul class="ticks"><li>Export a report as a spreadsheet (CSV) any time</li><li>Each day keeps the times it actually had</li><li>Parents’ meetings with real numbers</li></ul>
+      <h2>See the week at a glance</h2>
+      <p class="sub">Time out, long breaks and attendance. For the class or one student.</p>
+      <ul class="ticks"><li>Spot who is out the most</li><li>Export to a spreadsheet</li><li>Real numbers for parents’ meetings</li></ul>
     </div>
-    <div class="shot"><img src="img/reports.png" alt="The Reports tab for one class this week: time out of class, breaks, breaks over the limit, attendance, and minutes out for each student" width="2560" height="1600" loading="lazy"></div>
+    <div class="chartcard">
+      <div class="head"><h3>Minutes out, by student</h3><span class="pill"><i></i>2 above average</span></div>
+      <svg class="mchart" viewBox="0 0 540 290" role="img" aria-label="Minutes out for seven students this week. Average 164 minutes. Zayd K. 255 minutes and Musa T. 305 minutes are above it.">
+<defs>
+<clipPath id="mc0"><path d="M49 260V200.4Q49 195.4 54 195.4H85.4Q90.4 195.4 90.4 200.4V260Z"/></clipPath>
+<clipPath id="mc1"><path d="M120.4 260V210.6Q120.4 205.6 125.4 205.6H156.8Q161.8 205.6 161.8 210.6V260Z"/></clipPath>
+<clipPath id="mc2"><path d="M191.9 260V91.6Q191.9 86.6 196.9 86.6H228.3Q233.3 86.6 233.3 91.6V260Z"/></clipPath>
+<clipPath id="mc3"><path d="M263.3 260V180Q263.3 175 268.3 175H299.7Q304.7 175 304.7 180V260Z"/></clipPath>
+<clipPath id="mc4"><path d="M334.7 260V159.6Q334.7 154.6 339.7 154.6H371.1Q376.1 154.6 376.1 159.6V260Z"/></clipPath>
+<clipPath id="mc5"><path d="M406.2 260V57.6Q406.2 52.6 411.2 52.6H442.6Q447.6 52.6 447.6 57.6V260Z"/></clipPath>
+<clipPath id="mc6"><path d="M477.6 260V176.6Q477.6 171.6 482.6 171.6H514Q519 171.6 519 176.6V260Z"/></clipPath>
+</defs>
+<line x1="34" x2="534" y1="260" y2="260" class="b"/><text x="27" y="264" class="ax">0</text>
+<line x1="34" x2="534" y1="226" y2="226" class="g"/><text x="27" y="230" class="ax">50</text>
+<line x1="34" x2="534" y1="192" y2="192" class="g"/><text x="27" y="196" class="ax">100</text>
+<line x1="34" x2="534" y1="158" y2="158" class="g"/><text x="27" y="162" class="ax">150</text>
+<line x1="34" x2="534" y1="124" y2="124" class="g"/><text x="27" y="128" class="ax">200</text>
+<line x1="34" x2="534" y1="90" y2="90" class="g"/><text x="27" y="94" class="ax">250</text>
+<line x1="34" x2="534" y1="56" y2="56" class="g"/><text x="27" y="60" class="ax">300</text>
+<line x1="34" x2="534" y1="22" y2="22" class="g"/><text x="27" y="26" class="ax">350</text>
+<g><title>Hamza R.: 95 min (Washroom 80, Water 15)</title>
+<g clip-path="url(#mc0)" class="fade">
+<rect x="49" y="205.6" width="41.4" height="54.4" class="washroom"/>
+<rect x="49" y="204.6" width="41.4" height="2" class="gap"/>
+<rect x="49" y="195.4" width="41.4" height="10.2" class="water"/>
+</g>
+<text x="69.7" y="279" class="nm">Hamza R.</text></g>
+<g><title>Bilal S.: 80 min (Washroom 60, Water 20)</title>
+<g clip-path="url(#mc1)" class="fade">
+<rect x="120.4" y="219.2" width="41.4" height="40.8" class="washroom"/>
+<rect x="120.4" y="218.2" width="41.4" height="2" class="gap"/>
+<rect x="120.4" y="205.6" width="41.4" height="13.6" class="water"/>
+</g>
+<text x="141.1" y="279" class="nm">Bilal S.</text></g>
+<g class="hi"><title>Zayd K.: 255 min (Washroom 170, Water 25, Wudhu 60)</title>
+<rect class="band" x="179.9" y="12" width="65.4" height="248" rx="10"/>
+<g clip-path="url(#mc2)">
+<rect x="191.9" y="144.4" width="41.4" height="115.6" class="washroom"/>
+<rect x="191.9" y="143.4" width="41.4" height="2" class="gap"/>
+<rect x="191.9" y="127.4" width="41.4" height="17" class="water"/>
+<rect x="191.9" y="126.4" width="41.4" height="2" class="gap"/>
+<rect x="191.9" y="86.6" width="41.4" height="40.8" class="wudhu"/>
+</g>
+<text x="212.6" y="78.6" class="val">255 min</text>
+<text x="212.6" y="279" class="nm">Zayd K.</text></g>
+<g><title>Idris M.: 125 min (Washroom 110, Water 15)</title>
+<g clip-path="url(#mc3)" class="fade">
+<rect x="263.3" y="185.2" width="41.4" height="74.8" class="washroom"/>
+<rect x="263.3" y="184.2" width="41.4" height="2" class="gap"/>
+<rect x="263.3" y="175" width="41.4" height="10.2" class="water"/>
+</g>
+<text x="284" y="279" class="nm">Idris M.</text></g>
+<g><title>Yahya A.: 155 min (Washroom 130, Water 10, Wudhu 15)</title>
+<g clip-path="url(#mc4)" class="fade">
+<rect x="334.7" y="171.6" width="41.4" height="88.4" class="washroom"/>
+<rect x="334.7" y="170.6" width="41.4" height="2" class="gap"/>
+<rect x="334.7" y="164.8" width="41.4" height="6.8" class="water"/>
+<rect x="334.7" y="163.8" width="41.4" height="2" class="gap"/>
+<rect x="334.7" y="154.6" width="41.4" height="10.2" class="wudhu"/>
+</g>
+<text x="355.4" y="279" class="nm">Yahya A.</text></g>
+<g class="hi"><title>Musa T.: 305 min (Washroom 190, Water 30, Wudhu 85)</title>
+<rect class="band" x="394.1" y="12" width="65.4" height="248" rx="10"/>
+<g clip-path="url(#mc5)">
+<rect x="406.2" y="130.8" width="41.4" height="129.2" class="washroom"/>
+<rect x="406.2" y="129.8" width="41.4" height="2" class="gap"/>
+<rect x="406.2" y="110.4" width="41.4" height="20.4" class="water"/>
+<rect x="406.2" y="109.4" width="41.4" height="2" class="gap"/>
+<rect x="406.2" y="52.6" width="41.4" height="57.8" class="wudhu"/>
+</g>
+<text x="426.9" y="44.6" class="val">305 min</text>
+<text x="426.9" y="279" class="nm">Musa T.</text></g>
+<g><title>Ilyas F.: 130 min (Washroom 100, Wudhu 30)</title>
+<g clip-path="url(#mc6)" class="fade">
+<rect x="477.6" y="192" width="41.4" height="68" class="washroom"/>
+<rect x="477.6" y="191" width="41.4" height="2" class="gap"/>
+<rect x="477.6" y="171.6" width="41.4" height="20.4" class="wudhu"/>
+</g>
+<text x="498.3" y="279" class="nm">Ilyas F.</text></g>
+<line x1="34" x2="534" y1="148.5" y2="148.5" class="avg"/><rect x="38" y="128.5" width="96" height="16" rx="4" class="avgbg"/><text x="41" y="140.5" class="avgt">average 164 min</text></svg>
+      <ul class="key"><li><span class="sw" style="background:var(--c-washroom,#eb6834)"></span>Washroom</li><li><span class="sw" style="background:var(--c-water,#2a78d6)"></span>Water</li><li><span class="sw" style="background:var(--c-wudhu,#1baf7a)"></span>Wudhu</li><li><span class="dash"></span>Average</li></ul>
+    </div>
   </section>
 
   <section class="split" id="orgs">
